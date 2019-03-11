@@ -15,12 +15,12 @@ import java.util.concurrent.ExecutionException;
 
 public class NetworkUtils {
 
-    private static final String BASE_URL_CASH_RATE = "https://api.privatbank.ua/p24api/exchange_rates?json&date=01.12.2014";
+    private static final String BASE_URL_CASH_RATE = "https://api.privatbank.ua/p24api/exchange_rates?json&date=%s";
 
     public static JSONObject getCurrencyJSONObject(String date) {
         JSONObject result = null;
         try {
-            result = new JSONLoadTask().execute(BASE_URL_CASH_RATE).get();
+            result = new JSONLoadTask().execute(String.format(BASE_URL_CASH_RATE, date)).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -40,7 +40,7 @@ public class NetworkUtils {
             }
             HttpURLConnection httpURLConnection = null;
             try {
-                url = new URL(BASE_URL_CASH_RATE);
+                url = new URL(strings[0]);
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

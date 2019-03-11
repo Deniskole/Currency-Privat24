@@ -18,7 +18,6 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.Curren
 
     public void setCurrencyRatesList(ArrayList<CurrencyRate> currencyRatesList) {
         this.currencyRatesList = currencyRatesList;
-        notifyDataSetChanged();
     }
 
     @NonNull

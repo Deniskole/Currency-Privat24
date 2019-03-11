@@ -30,20 +30,27 @@ public class JSONUtils {
             JSONArray jsonArray = jsonObject.getJSONArray(PARAMS_EXCHANGE_RATE);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String baseCurrency = object.getString(PARAMS_BASE_CURRENCY);
-                String currency = object.getString(PARAMS_CURRENCY);
-                double saleRateNB = object.getDouble(PARAMS_SALE_RATE_NB);
-                double purchaseRateNB = object.getDouble(PARAMS_PURCHASE_RATE_NB);
+
+                String baseCurrency = "";
+                String currency = "";
+                double saleRateNB = 0;
+                double purchaseRateNB = 0;
                 double saleRate = 0;
                 double purchaseRate = 0;
+
                 try {
+                    baseCurrency = object.getString(PARAMS_BASE_CURRENCY);
+                    currency = object.getString(PARAMS_CURRENCY);
                     saleRate = object.getDouble(PARAMS_SALE_RATE);
                     purchaseRate = object.getDouble(PARAMS_PURCHASE_RATE);
+                    saleRateNB = object.getDouble(PARAMS_SALE_RATE_NB);
+                    purchaseRateNB = object.getDouble(PARAMS_PURCHASE_RATE_NB);
                 } catch (Exception e) {
-
                 }
                 CurrencyRate currencyRate = new CurrencyRate(baseCurrency, currency, saleRateNB, purchaseRateNB, saleRate, purchaseRate);
-                result.add(currencyRate);
+                if (!baseCurrency.isEmpty() && !currency.isEmpty() && saleRate != 0 && purchaseRate != 0) {
+                    result.add(currencyRate);
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
